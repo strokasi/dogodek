@@ -18,9 +18,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Inject secret URL
+   - name: Inject secret URL
+        env:
+          PA_URL: ${{ secrets.POWER_AUTOMATE_URL }}
         run: |
-          sed -i 's|POWER_AUTOMATE_URL_PLACEHOLDER|${{ secrets.POWER_AUTOMATE_URL }}|g' M365.html
+          python3 -c "
+          with open('M365.html', 'r') as f:
+              content = f.read()
+          import os
+          content = content.replace('POWER_AUTOMATE_URL_PLACEHOLDER', os.environ['PA_URL'])
+          with open('M365.html', 'w') as f:
+              f.write(content)
+          print('Done - replaced URL')
+          "
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
