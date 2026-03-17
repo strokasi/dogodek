@@ -786,7 +786,7 @@
     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
     <script>
-        var SCRIPT_URL = 'https://defaultd3d5dc57d1164c05b231eacf4e77f1.93.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/66a6bc53169c48d6b4c3ac4b9f32ae88/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=68VjkmfQlChAdUTVRNjRHZrsA92L3ScMJ-KToT_ewe4';
+        var SCRIPT_URL = 'POWER_AUTOMATE_URL_PLACEHOLDER';
 
         function validateEmail(email) {
             return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -818,30 +818,10 @@
             document.getElementById('registrationForm').style.display = 'none';
             document.getElementById('successState').style.display = 'block';
 
-            // Ustvari skriti form in ga pošlji direktno – brez CORS
-            var hiddenForm = document.createElement('form');
-            hiddenForm.method = 'POST';
-            hiddenForm.action = SCRIPT_URL;
-            hiddenForm.target = 'hidden_iframe';
-            hiddenForm.enctype = 'application/x-www-form-urlencoded';
-
-            var fields = {
-                fullname: fullname,
-                company: company,
-                email: email,
-                timestamp: new Date().toLocaleString('sl-SI')
-            };
-
-            Object.keys(fields).forEach(function(key) {
-                var input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = key;
-                input.value = fields[key];
-                hiddenForm.appendChild(input);
-            });
-
-            document.body.appendChild(hiddenForm);
-            hiddenForm.submit();
-            document.body.removeChild(hiddenForm);
+            // Pošlji v Power Automate
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', SCRIPT_URL, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(payload);
         });
     </script>
