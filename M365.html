@@ -575,7 +575,7 @@
             <img src="https://www.stroka.si/Portals/_default/logo_stroka_si_white.png?ver=2025-06-04-113611-483&timestamp=1749029751774" alt="Stroka.si">
         </a>
         <div class="topbar-contact">
-            <a href="mailto:ccc@stroka.si">ccc@stroka.si</a> &nbsp;|&nbsp; +386 (0)2 88 79 780
+            <a href="/cdn-cgi/l/email-protection#01626262417275736e6a602f7268"><span class="__cf_email__" data-cfemail="85e6e6e6c5f6f1f7eaeee4abf6ec">[email&#160;protected]</span></a> &nbsp;|&nbsp; +386 (0)2 88 79 780
         </div>
     </div>
 
@@ -754,7 +754,7 @@
                         </button>
                         <p class="form-note">
                             Udeležba je <strong>brezplačna</strong>. Število mest je omejeno.<br>
-                            Za vprašanja: <a href="mailto:monika.kovacic@stroka.si">monika.kovacic@stroka.si</a>
+                            Za vprašanja: <a href="/cdn-cgi/l/email-protection#2c41434245474d0247435a4d4f454f6c5f585e43474d025f45"><span class="__cf_email__" data-cfemail="9cf1f3f2f5f7fdb2f7f3eafdfff5ffdcefe8eef3f7fdb2eff5">[email&#160;protected]</span></a>
                         </p>
                     </form>
                 </div>
@@ -762,7 +762,7 @@
                     <div class="success-icon">✓</div>
                     <h3>Prijava uspešna!</h3>
                     <p>Hvala za prijavo. Na vaš e-naslov smo poslali potrditev z vsemi podrobnostmi o dogodku.</p>
-                    <p style="margin-top: 12px; font-size: 13px; color: #aaa;">Za vprašanja: <a href="mailto:monika.kovacic@stroka.si" style="color: var(--teal);">monika.kovacic@stroka.si</a></p>
+                    <p style="margin-top: 12px; font-size: 13px; color: #aaa;">Za vprašanja: <a href="/cdn-cgi/l/email-protection#d3bebcbdbab8b2fdb8bca5b2b0bab093a0a7a1bcb8b2fda0ba" style="color: var(--teal);"><span class="__cf_email__" data-cfemail="274a48494e4c46094c485146444e4467545355484c4609544e">[email&#160;protected]</span></a></p>
                 </div>
             </div>
         </div>
@@ -779,12 +779,12 @@
     <!-- Footer -->
     <div class="site-footer">
         <img src="https://www.stroka.si/Portals/_default/logo_stroka_si_white.png?ver=2025-06-04-113611-483&timestamp=1749029751774" alt="Stroka.si"><br>
-        <p>Skupina stroka.si, Stroka produkt d.o.o. &nbsp;|&nbsp; <a href="mailto:ccc@stroka.si">ccc@stroka.si</a> &nbsp;|&nbsp; +386 (0)2 88 79 780</p>
+        <p>Skupina stroka.si, Stroka produkt d.o.o. &nbsp;|&nbsp; <a href="/cdn-cgi/l/email-protection#e2818181a29196908d8983cc918b"><span class="__cf_email__" data-cfemail="482b2b2b083b3c3a272329663b21">[email&#160;protected]</span></a> &nbsp;|&nbsp; +386 (0)2 88 79 780</p>
         <p style="margin-top: 8px; font-size: 11px; color: rgba(255,255,255,0.3);">© 2026 Stroka produkt d.o.o. Vse pravice pridržane.</p>
     </div>
 
-    <script>
-        const SCRIPT_URL = 'https://defaultd3d5dc57d1164c05b231eacf4e77f1.93.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/15cea70833c34a44bf510a5218c6b4fb/triggers/manual/paths/invoke?api-version=1';
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        const SCRIPT_URL = 'https://defaultd3d5dc57d1164c05b231eacf4e77f1.93.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/15cea70833c34a44bf510a5218c6b4fb/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=63foBQemWifZLGhMWYp1ouVvAXSP-XZ88tQ_YfvnKWo';
 
         const form = document.getElementById('registrationForm');
         const submitBtn = document.getElementById('submitBtn');
@@ -831,30 +831,11 @@
                 timestamp: new Date().toLocaleString('sl-SI')
             });
 
-            // Pošlji v Power Automate (no-cors – odgovora ne moremo prebrati, kar je normalno)
+            // Pošlji v Power Automate
+            // Content-Type: text/plain prepreči CORS preflight zahtevo
             try {
                 await fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'text/plain' },
                     body: payload
-                });
-            } catch (err) {
-                // Pri no-cors fetch vedno pride do "network error" – to je normalno in ne pomeni napake
-            }
-
-            // Prikaži sporočilo o uspešni prijavi
-            formBody.querySelector('form').style.display = 'none';
-            successState.style.display = 'block';
-        });
-
-        // Počisti napako ob tipkanju
-        ['fullname', 'company', 'email'].forEach(function(id) {
-            document.getElementById(id).addEventListener('input', function() {
-                this.classList.remove('error');
-            });
-        });
-    </script>
-
-</body>
-</html>
