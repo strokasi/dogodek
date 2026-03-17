@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M365 okolje – varno in pripravljeno na prihodnost | Skupina stroka.si</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --teal: #50afb0;
+            --teal-dark: #3d8c8d;
+            --teal-light: #e8f6f6;
+            --black: #111111;
+            --dark: #222222;
+            --mid: #555555;
+            --light: #888888;
+            --border: #e0e0e0;
+            --bg: #f7f7f7;
+            --white: #ffffff;
+            --red: #e74c3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--dark);
+            background: var(--white);
+            line-height: 1.6;
+        }
+
+        /* ── TOPBAR ── */
+        .topbar {
+            background: var(--black);
+            padding: 12px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .topbar img {
+            height: 32px;
+        }
+        .topbar-contact {
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+        }
+        .topbar-contact a {
+            color: var(--teal);
+            text-decoration: none;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a3a3a 60%, #50afb0 100%);
+            color: white;
+            padding: 80px 40px 70px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(80,175,176,0.18) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -60px; left: 10%;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(80,175,176,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-label {
+            display: inline-block;
+            background: rgba(80,175,176,0.25);
+            border: 1px solid rgba(80,175,176,0.5);
+            color: #a8dfe0;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2.2rem, 5vw, 3.4rem);
+            line-height: 1.15;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+        .hero h1 em {
+            font-style: italic;
+            color: #7fd4d5;
+        }
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: rgba(255,255,255,0.75);
+            max-width: 620px;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        /* Event meta chips */
+        .event-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 0;
+        }
+        .meta-chip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-size: 14px;
+            color: white;
+            backdrop-filter: blur(4px);
+        }
+        .meta-chip .icon {
+            font-size: 16px;
+        }
+        .meta-chip strong {
+            font-weight: 600;
+        }
+        .meta-chip.free {
+            background: rgba(80,175,176,0.3);
+            border-color: var(--teal);
+            font-weight: 700;
+            color: #a8dfe0;
+        }
+
+        /* ── LAYOUT ── */
+        .page-body {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            display: grid;
+            grid-template-columns: 1fr 480px;
+            gap: 70px;
+            align-items: start;
+        }
+
+        /* ── LEFT CONTENT ── */
+        .content h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.9rem;
+            color: var(--black);
+            margin-bottom: 14px;
+            font-weight: 400;
+        }
+        .content > p {
+            font-size: 1rem;
+            color: var(--mid);
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        /* Topics */
+        .topics {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .topic {
+            display: flex;
+            gap: 20px;
+            padding: 22px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .topic:first-child {
+            border-top: 1px solid var(--border);
+        }
+        .topic-num {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            background: var(--teal-light);
+            color: var(--teal-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+        .topic-content h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 5px;
+        }
+        .topic-content p {
+            font-size: 0.9rem;
+            color: var(--mid);
+            line-height: 1.55;
+        }
+
+        /* Agenda */
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 18px;
+            margin-top: 50px;
+        }
+        .agenda {
+            background: var(--bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .agenda-row {
+            display: grid;
+            grid-template-columns: 110px 1fr;
+            gap: 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .agenda-row:last-child {
+            border-bottom: none;
+        }
+        .agenda-time {
+            padding: 14px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--teal-dark);
+            background: var(--teal-light);
+            display: flex;
+            align-items: center;
+            font-variant-numeric: tabular-nums;
+        }
+        .agenda-content {
+            padding: 14px 18px;
+        }
+        .agenda-content strong {
+            display: block;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 2px;
+        }
+        .agenda-content span {
+            font-size: 12px;
+            color: var(--light);
+        }
+        .agenda-row.networking .agenda-time {
+            background: #fff8e8;
+            color: #b07d20;
+            font-weight: 700;
+        }
+        .agenda-row.networking .agenda-content {
+            background: #fffcf5;
+        }
+        .agenda-row.networking .agenda-content strong {
+            color: #7a5a10;
+        }
+        .agenda-row.networking .agenda-content span {
+            color: #888;
+            font-style: italic;
+        }
+
+        /* Speakers */
+        .speakers {
+            margin-top: 50px;
+        }
+        .speaker-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        .speaker-card {
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 18px;
+        }
+        .speaker-card .name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 3px;
+        }
+        .speaker-card .role {
+            font-size: 12px;
+            color: var(--light);
+            line-height: 1.4;
+        }
+        .speaker-card .org {
+            font-size: 11px;
+            color: var(--teal);
+            font-weight: 600;
+            margin-top: 5px;
+        }
+        .speaker-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--teal-light);
+            color: var(--teal-dark);
+            font-weight: 700;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        /* ── FORM SIDEBAR ── */
+        .form-sidebar {
+            position: sticky;
+            top: 30px;
+        }
+        .form-card {
+            background: white;
+            border: 2px solid var(--teal);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 8px 40px rgba(80,175,176,0.15);
+        }
+        .form-header {
+            background: var(--teal);
+            padding: 24px 28px;
+            color: white;
+        }
+        .form-header p.eyebrow {
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 600;
+            opacity: 0.85;
+            margin-bottom: 8px;
+        }
+        .form-header h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            line-height: 1.3;
+        }
+        .form-header .sub {
+            margin-top: 10px;
+            font-size: 13px;
+            opacity: 0.85;
+        }
+        .form-body {
+            padding: 28px;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 7px;
+        }
+        .form-group label .req {
+            color: var(--red);
+        }
+        .form-group input {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 7px;
+            font-size: 14px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--dark);
+            background: white;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+        .form-group input:focus {
+            border-color: var(--teal);
+            box-shadow: 0 0 0 3px rgba(80,175,176,0.15);
+        }
+        .form-group input.error {
+            border-color: var(--red);
+        }
+        .form-group .error-msg {
+            font-size: 12px;
+            color: var(--red);
+            margin-top: 5px;
+            display: none;
+        }
+        .form-group input.error + .error-msg {
+            display: block;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--teal);
+            color: white;
+            border: none;
+            border-radius: 7px;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+            margin-top: 4px;
+        }
+        .btn-submit:hover {
+            background: var(--teal-dark);
+            transform: translateY(-1px);
+        }
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .form-note {
+            margin-top: 14px;
+            font-size: 12px;
+            color: var(--light);
+            text-align: center;
+            line-height: 1.5;
+        }
+        .form-note a {
+            color: var(--teal);
+        }
+
+        /* Success state */
+        .success-state {
+            display: none;
+            padding: 36px 28px;
+            text-align: center;
+        }
+        .success-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--teal-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px auto;
+            font-size: 26px;
+        }
+        .success-state h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+        .success-state p {
+            font-size: 14px;
+            color: var(--mid);
+            line-height: 1.6;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ── FOOTER ── */
+        .site-footer {
+            background: var(--black);
+            color: rgba(255,255,255,0.6);
+            padding: 36px 40px;
+            text-align: center;
+        }
+        .site-footer img {
+            height: 28px;
+            margin-bottom: 14px;
+        }
+        .site-footer p {
+            font-size: 13px;
+            margin: 4px 0;
+        }
+        .site-footer a {
+            color: var(--teal);
+            text-decoration: none;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            .page-body {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 40px 24px;
+            }
+            .form-sidebar {
+                position: static;
+            }
+            .hero {
+                padding: 50px 24px 50px 24px;
+            }
+            .topbar {
+                padding: 12px 24px;
+            }
+            .topbar-contact {
+                display: none;
+            }
+        }
+        @media (max-width: 600px) {
+            .event-meta {
+                flex-direction: column;
+            }
+            .speaker-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Topbar -->
+    <div class="topbar">
+        <a href="https://www.stroka.si" target="_blank">
+            <img src="https://www.stroka.si/Portals/_default/logo_stroka_si_white.png?ver=2025-06-04-113611-483&timestamp=1749029751774" alt="Stroka.si">
+        </a>
+        <div class="topbar-contact">
+            <a href="/cdn-cgi/l/email-protection#e0838383a09394928f8b81ce9389"><span class="__cf_email__" data-cfemail="5b3838381b282f2934303a752832">[email&#160;protected]</span></a> &nbsp;|&nbsp; +386 (0)2 88 79 780
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-inner">
+            <div class="hero-label">Brezplačen strokovni dogodek</div>
+            <h1>Vaš M365 že plačujete.<br><em>Ga tudi zares izkoriščate?</em></h1>
+            <p class="hero-subtitle">Strokovno srečanje za vse, ki želijo Microsoft 365 uporabljati bolj učinkovito, varno in strateško.</p>
+            <div class="event-meta">
+                <div class="meta-chip">
+                    <span class="icon">📅</span>
+                    <div><strong>Torek, 8. april 2026</strong> &nbsp;ob 9:00 – 12:00</div>
+                </div>
+                <div class="meta-chip">
+                    <span class="icon">📍</span>
+                    <div><strong>GZS Ljubljana</strong>, Dimičeva 13, dvorana B</div>
+                </div>
+                <div class="meta-chip">
+                    <span class="icon">🅿️</span>
+                    <div>Brezplačno GZS parkirišče</div>
+                </div>
+                <div class="meta-chip free">
+                    <span class="icon">🎟️</span>
+                    <div>Brezplačna udeležba</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Body -->
+    <div class="page-body">
+
+        <!-- Left: Content -->
+        <div class="content">
+            <h2>Kaj boste odnesli s seboj?</h2>
+            <p>Večina podjetij plačuje za Microsoft 365, a izkorišča le del njegovih zmogljivosti. Na tem brezplačnem srečanju vam bomo pokazali, kako M365 spremeniti iz nabora orodij v resnično poslovno prednost.</p>
+
+            <div class="topics">
+                <div class="topic">
+                    <div class="topic-num">1</div>
+                    <div class="topic-content">
+                        <h3>Microsoft 365 za večjo produktivnost</h3>
+                        <p>Spoznajte, kako premišljena raba orodij M365 izboljša sodelovanje, pohitri delovne procese in poveča produktivnost ekip – ter kje podjetja najpogosteje puščajo čas in denar. S poudarkom na razvoju M365 okolja in vlogi SharePointa.</p>
+                    </div>
+                </div>
+                <div class="topic">
+                    <div class="topic-num">2</div>
+                    <div class="topic-content">
+                        <h3>Sodobni intranet portal</h3>
+                        <p>Prikaz sodobnega intranet portala kot osrednjega mesta za zaposlene. Kaj se zgodi, ko zaposleni ne iščejo več informacij in jih enostavno najdejo? Primer iz prakse.</p>
+                    </div>
+                </div>
+                <div class="topic">
+                    <div class="topic-num">3</div>
+                    <div class="topic-content">
+                        <h3>Microsoft Copilot v praksi</h3>
+                        <p>Praktična uporaba Microsoft Copilota v Outlooku, Wordu in Excelu. Konkretni primeri in resnični scenariji iz prakse, ki jih lahko začnete uporabljati takoj.</p>
+                    </div>
+                </div>
+                <div class="topic">
+                    <div class="topic-num">4</div>
+                    <div class="topic-content">
+                        <h3>Informacijska varnost za srednje velika podjetja</h3>
+                        <p>Vprašanje ni <em>ali</em> bo prišlo do varnostnega incidenta – ampak <em>kdaj</em>. Napredna zaščita pred kibernetskimi grožnjami z Microsoftovimi varnostnimi orodji ter gradnja varnostne kulture v podjetju.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agenda -->
+            <p class="section-label">Agenda</p>
+            <div class="agenda">
+                <div class="agenda-row">
+                    <div class="agenda-time">9:00 – 9:15</div>
+                    <div class="agenda-content">
+                        <strong>Pozdravni nagovor ob dišeči jutranji kavi in rogljičkih</strong>
+                        <span>Tin Markon, direktor Skupine stroka.si</span>
+                    </div>
+                </div>
+                <div class="agenda-row">
+                    <div class="agenda-time">9:15 – 9:45</div>
+                    <div class="agenda-content">
+                        <strong>Microsoft 365 za večjo produktivnost + primer iz prakse</strong>
+                        <span>Matjaž Forjan, Vodja M365 AI projektov, Skupina stroka.si</span>
+                    </div>
+                </div>
+                <div class="agenda-row">
+                    <div class="agenda-time">10:00 – 10:30</div>
+                    <div class="agenda-content">
+                        <strong>Hitri triki, ki vam olajšajo delo s pomočjo Copilot orodja</strong>
+                        <span>Matjaž Forjan, Vodja M365 AI projektov, Skupina stroka.si</span>
+                    </div>
+                </div>
+                <div class="agenda-row">
+                    <div class="agenda-time">10:45 – 11:15</div>
+                    <div class="agenda-content">
+                        <strong>Informacijska varnost v M365 okolju</strong>
+                        <span>Boris Ramšak, strokovnjak za kibernetsko varnost, Skupina stroka.si</span>
+                    </div>
+                </div>
+                <div class="agenda-row">
+                    <div class="agenda-time">11:15 – 11:30</div>
+                    <div class="agenda-content">
+                        <strong>Primer iz prakse: varnost</strong>
+                        <span>Peter Purg, vodja IT in digitalne transformacije, Pharmalinea</span>
+                    </div>
+                </div>
+                <div class="agenda-row networking">
+                    <div class="agenda-time">11:30 – 12:00</div>
+                    <div class="agenda-content">
+                        <strong>☕ Druženje ob kavi in prigrizkih</strong>
+                        <span>Strokovnjaki ostanejo na voljo za sproščen pogovor – izkoristite priložnost za vprašanja in izmenjavo izkušenj</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Speakers -->
+            <div class="speakers">
+                <p class="section-label" style="margin-top: 40px;">Predavatelji</p>
+                <div class="speaker-grid">
+                    <div class="speaker-card">
+                        <div class="speaker-avatar">TM</div>
+                        <div class="name">Tin Markon</div>
+                        <div class="role">Direktor</div>
+                        <div class="org">Skupina stroka.si</div>
+                    </div>
+                    <div class="speaker-card">
+                        <div class="speaker-avatar">MF</div>
+                        <div class="name">Matjaž Forjan</div>
+                        <div class="role">Vodja M365 AI projektov</div>
+                        <div class="org">Skupina stroka.si</div>
+                    </div>
+                    <div class="speaker-card">
+                        <div class="speaker-avatar">BR</div>
+                        <div class="name">Boris Ramšak</div>
+                        <div class="role">Strokovnjak za kibernetsko varnost</div>
+                        <div class="org">Skupina stroka.si</div>
+                    </div>
+                    <div class="speaker-card">
+                        <div class="speaker-avatar">PP</div>
+                        <div class="name">Peter Purg</div>
+                        <div class="role">Vodja IT in digitalne transformacije</div>
+                        <div class="org">Pharmalinea</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div class="form-sidebar">
+            <div class="form-card">
+                <div class="form-header">
+                    <p class="eyebrow">Prijavite se</p>
+                    <h2>Zagotovite si mesto na dogodku</h2>
+                    <p class="sub">Torek, 8. april 2026 · 9:00 · GZS Ljubljana</p>
+                </div>
+                <div class="form-body" id="formBody">
+                    <form id="registrationForm" novalidate>
+                        <div class="form-group">
+                            <label for="fullname">Ime in priimek <span class="req">*</span></label>
+                            <input type="text" id="fullname" name="fullname" placeholder="npr. Ana Novak" autocomplete="name">
+                            <div class="error-msg">Prosimo, vnesite ime in priimek.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Podjetje <span class="req">*</span></label>
+                            <input type="text" id="company" name="company" placeholder="npr. Podjetje d.o.o." autocomplete="organization">
+                            <div class="error-msg">Prosimo, vnesite ime podjetja.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail naslov <span class="req">*</span></label>
+                            <input type="email" id="email" name="email" placeholder="npr. ana.novak@podjetje.si" autocomplete="email">
+                            <div class="error-msg">Prosimo, vnesite veljaven e-mail naslov.</div>
+                        </div>
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            Prijavite me na dogodek
+                        </button>
+                        <p class="form-note">
+                            Udeležba je <strong>brezplačna</strong>. Število mest je omejeno.<br>
+                            Za vprašanja: <a href="/cdn-cgi/l/email-protection#98f5f7f6f1f3f9b6f3f7eef9fbf1fbd8ebeceaf7f3f9b6ebf1"><span class="__cf_email__" data-cfemail="0d60626364666c2366627b6c6e646e4d7e797f62666c237e64">[email&#160;protected]</span></a>
+                        </p>
+                    </form>
+                </div>
+                <div class="success-state" id="successState">
+                    <div class="success-icon">✓</div>
+                    <h3>Prijava uspešna!</h3>
+                    <p>Hvala za prijavo. Na vaš e-naslov smo poslali potrditev z vsemi podrobnostmi o dogodku.</p>
+                    <p style="margin-top: 12px; font-size: 13px; color: #aaa;">Za vprašanja: <a href="/cdn-cgi/l/email-protection#e8858786818389c683879e898b818ba89b9c9a878389c69b81" style="color: var(--teal);"><span class="__cf_email__" data-cfemail="533e3c3d3a38327d383c2532303a30132027213c38327d203a">[email&#160;protected]</span></a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="site-footer">
+        <img src="https://www.stroka.si/Portals/_default/logo_stroka_si_white.png?ver=2025-06-04-113611-483&timestamp=1749029751774" alt="Stroka.si"><br>
+        <p>Skupina stroka.si, Stroka produkt d.o.o. &nbsp;|&nbsp; <a href="/cdn-cgi/l/email-protection#7f1c1c1c3f0c0b0d10141e510c16"><span class="__cf_email__" data-cfemail="3754545477444345585c5619445e">[email&#160;protected]</span></a> &nbsp;|&nbsp; +386 (0)2 88 79 780</p>
+        <p style="margin-top: 8px; font-size: 11px; color: rgba(255,255,255,0.3);">© 2026 Stroka produkt d.o.o. Vse pravice pridržane.</p>
+    </div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // ── FORM HANDLING ──
+    // Replace this URL with your Google Apps Script Web App URL
+    const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+
+    const form = document.getElementById('registrationForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const formBody = document.getElementById('formBody');
+    const successState = document.getElementById('successState');
+
+    function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function setError(inputId, show) {
+        const input = document.getElementById(inputId);
+        if (show) {
+            input.classList.add('error');
+        } else {
+            input.classList.remove('error');
+        }
+    }
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const fullname = document.getElementById('fullname').value.trim();
+        const company = document.getElementById('company').value.trim();
+        const email = document.getElementById('email').value.trim();
+
+        let valid = true;
+
+        setError('fullname', !fullname);
+        setError('company', !company);
+        setError('email', !email || !validateEmail(email));
+
+        if (!fullname || !company || !email || !validateEmail(email)) {
+            valid = false;
+        }
+
+        if (!valid) return;
+
+        // Loading state
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner"></span> Pošiljam ...';
+
+        const payload = {
+            fullname,
+            company,
+            email,
+            timestamp: new Date().toISOString(),
+            event: 'M365 okolje – varno in pripravljeno na prihodnost',
+            eventDate: '8. april 2026',
+            eventLocation: 'GZS Ljubljana, Dimičeva 13, dvorana B'
+        };
+
+        try {
+            // Submit to Google Apps Script
+            await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            // Show success (no-co
