@@ -783,8 +783,10 @@
         <p style="margin-top: 8px; font-size: 11px; color: rgba(255,255,255,0.3);">© 2026 Stroka produkt d.o.o. Vse pravice pridržane.</p>
     </div>
 
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
     <script>
-        var SCRIPT_URL = 'https://defaultd3d5dc57d1164c05b231eacf4e77f1.93.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/15cea70833c34a44bf510a5218c6b4fb/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=63foBQemWifZLGhMWYp1ouVvAXSP-XZ88tQ_YfvnKWo';
+        var SCRIPT_URL = 'https://defaultd3d5dc57d1164c05b231eacf4e77f1.93.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/66a6bc53169c48d6b4c3ac4b9f32ae88/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=68VjkmfQlChAdUTVRNjRHZrsA92L3ScMJ-KToT_ewe4';
 
         function validateEmail(email) {
             return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -816,19 +818,30 @@
             document.getElementById('registrationForm').style.display = 'none';
             document.getElementById('successState').style.display = 'block';
 
-            // Pošlji v Power Automate v ozadju
-            var payload = JSON.stringify({
+            // Ustvari skriti form in ga pošlji direktno – brez CORS
+            var hiddenForm = document.createElement('form');
+            hiddenForm.method = 'POST';
+            hiddenForm.action = SCRIPT_URL;
+            hiddenForm.target = 'hidden_iframe';
+            hiddenForm.enctype = 'application/x-www-form-urlencoded';
+
+            var fields = {
                 fullname: fullname,
                 company: company,
                 email: email,
                 timestamp: new Date().toLocaleString('sl-SI')
+            };
+
+            Object.keys(fields).forEach(function(key) {
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = fields[key];
+                hiddenForm.appendChild(input);
             });
 
-            fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'text/plain' },
-                body: payload
-            }).catch(function() { /* tiha napaka */ });
+            document.body.appendChild(hiddenForm);
+            hiddenForm.submit();
+            document.body.removeChild(hiddenForm);
         });
     </script>
