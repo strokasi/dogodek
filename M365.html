@@ -785,50 +785,71 @@
 
     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
-    <script>
-        var SCRIPT_URL = 'POWER_AUTOMATE_URL_PLACEHOLDER';
+  <script>
+    var SCRIPT_URL = 'POWER_AUTOMATE_URL_PLACEHOLDER';
 
-        function validateEmail(email) {
-            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function setError(inputId, show) {
+        var input = document.getElementById(inputId);
+        if (show) {
+            input.classList.add('error');
+        } else {
+            input.classList.remove('error');
         }
+    }
 
-        function setError(inputId, show) {
-            var input = document.getElementById(inputId);
-            if (show) {
-                input.classList.add('error');
-            } else {
-                input.classList.remove('error');
-            }
-        }
+    document.getElementById('registrationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
 
-        document.getElementById('registrationForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        var fullname = document.getElementById('fullname').value.trim();
+        var company = document.getElementById('company').value.trim();
+        var email = document.getElementById('email').value.trim();
 
-            var fullname = document.getElementById('fullname').value.trim();
-            var company = document.getElementById('company').value.trim();
-            var email = document.getElementById('email').value.trim();
+        var hasErrors = false;
+        if (!fullname) { setError('fullname', true); hasErrors = true; } else { setError('fullname', false); }
+        if (!company) { setError('company', true); hasErrors = true; } else { setError('company', false); }
+        if (!email || !validateEmail(email)) { setError('email', true); hasErrors = true; } else { setError('email', false); }
+        if (hasErrors) return;
 
-            var hasErrors = false;
-            if (!fullname) { setError('fullname', true); hasErrors = true; } else { setError('fullname', false); }
-            if (!company) { setError('company', true); hasErrors = true; } else { setError('company', false); }
-            if (!email || !validateEmail(email)) { setError('email', true); hasErrors = true; } else { setError('email', false); }
-            if (hasErrors) return;
+        var submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner"></span>Pošiljanje...';
 
-            // Takoj pokaži zahvalo
-            document.getElementById('registrationForm').style.display = 'none';
-            document.getElementById('successState').style.display = 'block';
-
-            // Pošlji v Power Automate
-            var payload = JSON.stringify({
-                fullname: fullname,
-                company: company,
-                email: email,
-                timestamp: new Date().toLocaleString('sl-SI')
-            });
-
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', SCRIPT_URL, true);
-            xhr.setRequestHeader('Content-Type', 'text/plain');
-            xhr.send(payload);
+        var payload = JSON.stringify({
+            fullname: fullname,
+            company: company,
+            email: email,
+            timestamp: new Date().toISOString()
         });
-    </script>
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', SCRIPT_URL, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function() {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                document.getElementById('registrationForm').style.display = 'none';
+                document.getElementById('successState').style.display = 'block';
+            } else {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Prijavite me na dogodek';
+                alert('Pri oddaji prijave je prišlo do napake. Poskusite znova.');
+                console.error('Power Automate error:', xhr.status, xhr.responseText);
+            }
+        };
+
+        xhr.onerror = function() {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Prijavite me na dogodek';
+            alert('Pri oddaji prijave je prišlo do napake. Poskusite znova.');
+            console.error('Network error');
+        };
+
+        xhr.send(payload);
+    });
+</script>
+</body>
+</html>
