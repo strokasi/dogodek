@@ -804,7 +804,7 @@
             }
         }
 
-        form.addEventListener('submit', async function(e) {
+        form.addEventListener('submit', function(e) {
             e.preventDefault();
 
             var fullname = document.getElementById('fullname').value.trim();
@@ -813,17 +813,16 @@
 
             // Validacija
             var hasErrors = false;
-
             if (!fullname) { setError('fullname', true); hasErrors = true; } else { setError('fullname', false); }
             if (!company) { setError('company', true); hasErrors = true; } else { setError('company', false); }
             if (!email || !validateEmail(email)) { setError('email', true); hasErrors = true; } else { setError('email', false); }
-
             if (hasErrors) return;
 
-            // Loading stanje
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner"></span> Pošiljam ...';
+            // Takoj pokaži zahvalno sporočilo – ne čakamo na odgovor
+            document.getElementById('registrationForm').style.display = 'none';
+            document.getElementById('successState').style.display = 'block';
 
+            // V ozadju pošlji podatke v Power Automate
             var payload = JSON.stringify({
                 fullname: fullname,
                 company: company,
@@ -831,11 +830,12 @@
                 timestamp: new Date().toLocaleString('sl-SI')
             });
 
-            // Pošlji v Power Automate
-            // Content-Type: text/plain prepreči CORS preflight zahtevo
-            try {
-                await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'text/plain' },
-                    body: payload
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain' },
+                body: payload
+            }).catch(function() {
+                // Tiha napaka – uporabnik je že videl zahvalo
+            });
+        });
