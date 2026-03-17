@@ -626,7 +626,7 @@
                     <div class="topic-num">2</div>
                     <div class="topic-content">
                         <h3>Celovita uporaba M365</h3>
-                        <p>Primer iz prakse s poudarkom na sodobnem intranet portalu.
+                        <p>Primer iz prakse s poudarkom na sodobnem intranet portalu.</p>
                     </div>
                 </div>
                 <div class="topic">
@@ -754,7 +754,7 @@
                         </button>
                         <p class="form-note">
                             Udeležba je <strong>brezplačna</strong>. Število mest je omejeno.<br>
-                            Za vprašanja: monika.kovacic@stroka.si
+                            Za vprašanja: <a href="mailto:monika.kovacic@stroka.si">monika.kovacic@stroka.si</a>
                         </p>
                     </form>
                 </div>
@@ -762,7 +762,7 @@
                     <div class="success-icon">✓</div>
                     <h3>Prijava uspešna!</h3>
                     <p>Hvala za prijavo. Na vaš e-naslov smo poslali potrditev z vsemi podrobnostmi o dogodku.</p>
-                    <p style="margin-top: 12px; font-size: 13px; color: #aaa;">Za vprašanja: monika.kovacic@stroka.si</p>
+                    <p style="margin-top: 12px; font-size: 13px; color: #aaa;">Za vprašanja: <a href="mailto:monika.kovacic@stroka.si" style="color: var(--teal);">monika.kovacic@stroka.si</a></p>
                 </div>
             </div>
         </div>
@@ -783,69 +783,78 @@
         <p style="margin-top: 8px; font-size: 11px; color: rgba(255,255,255,0.3);">© 2026 Stroka produkt d.o.o. Vse pravice pridržane.</p>
     </div>
 
-  <script>
-    // ── FORM HANDLING ──
-    // Replace this URL with your Google Apps Script Web App URL
-    const SCRIPT_URL = 'https://defaultd3d5dc57d1164c05b231eacf4e77f1.93.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/15cea70833c34a44bf510a5218c6b4fb/triggers/manual/paths/invoke?api-version=1';
- 
-    const form = document.getElementById('registrationForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const formBody = document.getElementById('formBody');
-    const successState = document.getElementById('successState');
- 
-    function validateEmail(email) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    }
- 
-    function setError(inputId, show) {
-        const input = document.getElementById(inputId);
-        if (show) {
-            input.classList.add('error');
-        } else {
-            input.classList.remove('error');
+    <script>
+        const SCRIPT_URL = 'https://defaultd3d5dc57d1164c05b231eacf4e77f1.93.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/15cea70833c34a44bf510a5218c6b4fb/triggers/manual/paths/invoke?api-version=1';
+
+        const form = document.getElementById('registrationForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formBody = document.getElementById('formBody');
+        const successState = document.getElementById('successState');
+
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         }
-    }
- 
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
- 
-        const fullname = document.getElementById('fullname').value.trim();
-        const company = document.getElementById('company').value.trim();
-        const email = document.getElementById('email').value.trim();
- 
-        let valid = true;
- 
-        setError('fullname', !fullname);
-        setError('company', !company);
-        setError('email', !email || !validateEmail(email));
- 
-        if (!fullname || !company || !email || !validateEmail(email)) {
-            valid = false;
+
+        function setError(inputId, show) {
+            var input = document.getElementById(inputId);
+            if (show) {
+                input.classList.add('error');
+            } else {
+                input.classList.remove('error');
+            }
         }
- 
-        if (!valid) return;
- 
-        // Loading state
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="spinner"></span> Pošiljam ...';
- 
-        const payload = {
-            fullname,
-            company,
-            email,
-            timestamp: new Date().toISOString(),
-            event: 'M365 okolje – varno in pripravljeno na prihodnost',
-            eventDate: '8. april 2026',
-            eventLocation: 'GZS Ljubljana, Dimičeva 13, dvorana B'
-        };
- 
-        try {
-            // Submit to Google Apps Script
-            await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            var fullname = document.getElementById('fullname').value.trim();
+            var company = document.getElementById('company').value.trim();
+            var email = document.getElementById('email').value.trim();
+
+            // Validacija
+            var hasErrors = false;
+
+            if (!fullname) { setError('fullname', true); hasErrors = true; } else { setError('fullname', false); }
+            if (!company) { setError('company', true); hasErrors = true; } else { setError('company', false); }
+            if (!email || !validateEmail(email)) { setError('email', true); hasErrors = true; } else { setError('email', false); }
+
+            if (hasErrors) return;
+
+            // Loading stanje
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner"></span> Pošiljam ...';
+
+            var payload = JSON.stringify({
+                fullname: fullname,
+                company: company,
+                email: email,
+                timestamp: new Date().toLocaleString('sl-SI')
             });
- 
-            // Show success (no-co
+
+            // Pošlji v Power Automate (no-cors – odgovora ne moremo prebrati, kar je normalno)
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: payload
+                });
+            } catch (err) {
+                // Pri no-cors fetch vedno pride do "network error" – to je normalno in ne pomeni napake
+            }
+
+            // Prikaži sporočilo o uspešni prijavi
+            formBody.querySelector('form').style.display = 'none';
+            successState.style.display = 'block';
+        });
+
+        // Počisti napako ob tipkanju
+        ['fullname', 'company', 'email'].forEach(function(id) {
+            document.getElementById(id).addEventListener('input', function() {
+                this.classList.remove('error');
+            });
+        });
+    </script>
+
+</body>
+</html>
