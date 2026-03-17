@@ -783,20 +783,20 @@
         <p style="margin-top: 8px; font-size: 11px; color: rgba(255,255,255,0.3);">© 2026 Stroka produkt d.o.o. Vse pravice pridržane.</p>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     // ── FORM HANDLING ──
     // Replace this URL with your Google Apps Script Web App URL
-    const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
-
+    const SCRIPT_URL = 'https://defaultd3d5dc57d1164c05b231eacf4e77f1.93.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/15cea70833c34a44bf510a5218c6b4fb/triggers/manual/paths/invoke?api-version=1';
+ 
     const form = document.getElementById('registrationForm');
     const submitBtn = document.getElementById('submitBtn');
     const formBody = document.getElementById('formBody');
     const successState = document.getElementById('successState');
-
+ 
     function validateEmail(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
-
+ 
     function setError(inputId, show) {
         const input = document.getElementById(inputId);
         if (show) {
@@ -805,30 +805,30 @@
             input.classList.remove('error');
         }
     }
-
+ 
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
-
+ 
         const fullname = document.getElementById('fullname').value.trim();
         const company = document.getElementById('company').value.trim();
         const email = document.getElementById('email').value.trim();
-
+ 
         let valid = true;
-
+ 
         setError('fullname', !fullname);
         setError('company', !company);
         setError('email', !email || !validateEmail(email));
-
+ 
         if (!fullname || !company || !email || !validateEmail(email)) {
             valid = false;
         }
-
+ 
         if (!valid) return;
-
+ 
         // Loading state
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<span class="spinner"></span> Pošiljam ...';
-
+ 
         const payload = {
             fullname,
             company,
@@ -838,7 +838,7 @@
             eventDate: '8. april 2026',
             eventLocation: 'GZS Ljubljana, Dimičeva 13, dvorana B'
         };
-
+ 
         try {
             // Submit to Google Apps Script
             await fetch(SCRIPT_URL, {
@@ -847,5 +847,5 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
-
+ 
             // Show success (no-co
