@@ -50,7 +50,7 @@
         }
         .topbar-contact a {
             color: var(--teal);
-            text-decoration: none; 
+            text-decoration: none;
         }
 
         /* ── HERO ── */
@@ -819,6 +819,13 @@
             document.getElementById('successState').style.display = 'block';
 
             // Pošlji v Power Automate
+            var payload = JSON.stringify({
+                fullname: fullname,
+                company: company,
+                email: email,
+                timestamp: new Date().toLocaleString('sl-SI')
+            });
+
             var xhr = new XMLHttpRequest();
             xhr.open('POST', SCRIPT_URL, true);
             xhr.setRequestHeader('Content-Type', 'application/json');
