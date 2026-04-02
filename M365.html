@@ -53,6 +53,42 @@
             text-decoration: none;
         }
 
+        /* ── MOBILE STICKY NAV ── */
+        .mobile-sticky-nav {
+            display: none;
+        }
+        @media (max-width: 900px) {
+            .mobile-sticky-nav {
+                display: flex;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                background: var(--black);
+                padding: 10px 16px;
+                align-items: center;
+                justify-content: space-between;
+                box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+            }
+            .mobile-sticky-nav img {
+                height: 24px;
+            }
+            .mobile-sticky-nav a.btn-nav {
+                background: var(--teal);
+                color: white;
+                font-size: 13px;
+                font-weight: 700;
+                font-family: 'DM Sans', sans-serif;
+                padding: 8px 16px;
+                border-radius: 6px;
+                text-decoration: none;
+                white-space: nowrap;
+                transition: background 0.2s;
+            }
+            .mobile-sticky-nav a.btn-nav:hover {
+                background: var(--teal-dark);
+            }
+        }
+
         /* ── HERO ── */
         .hero {
             background: linear-gradient(135deg, #1a1a1a 0%, #2a3a3a 60%, #50afb0 100%);
@@ -145,6 +181,19 @@
             border-color: var(--teal);
             font-weight: 700;
             color: #a8dfe0;
+        }
+
+        /* ── MOBILE INLINE FORM (shown only on mobile, right after hero) ── */
+        .mobile-form-section {
+            display: none;
+        }
+        @media (max-width: 900px) {
+            .mobile-form-section {
+                display: block;
+                padding: 32px 20px;
+                background: var(--bg);
+                border-bottom: 1px solid var(--border);
+            }
         }
 
         /* ── LAYOUT ── */
@@ -544,8 +593,9 @@
                 gap: 40px;
                 padding: 40px 24px;
             }
+            /* Hide the sidebar form on mobile — we show the inline one instead */
             .form-sidebar {
-                position: static;
+                display: none;
             }
             .hero {
                 padding: 50px 24px 50px 24px;
@@ -579,6 +629,14 @@
         </div>
     </div>
 
+    <!-- Mobile sticky nav (only visible on mobile) -->
+    <div class="mobile-sticky-nav">
+        <a href="https://www.stroka.si" target="_blank">
+            <img src="https://www.stroka.si/Portals/_default/logo_stroka_si_white.png?ver=2025-06-04-113611-483&timestamp=1749029751774" alt="Stroka.si">
+        </a>
+        <a href="#mobile-form" class="btn-nav">🎟️ Prijavite se</a>
+    </div>
+
     <!-- Hero -->
     <div class="hero">
         <div class="hero-inner">
@@ -602,6 +660,49 @@
                     <span class="icon">🎟️</span>
                     <div>Brezplačna udeležba</div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile inline form (only visible on mobile, right after hero) -->
+    <div class="mobile-form-section" id="mobile-form">
+        <div class="form-card">
+            <div class="form-header">
+                <p class="eyebrow">Prijavite se</p>
+                <h2>Zagotovite si mesto na dogodku</h2>
+                <p class="sub">Sreda, 8. april 2026 · 9:00 · GZS Ljubljana</p>
+            </div>
+            <div class="form-body" id="mobileFormBody">
+                <form id="mobileRegistrationForm" novalidate>
+                    <div class="form-group">
+                        <label for="mobile-fullname">Ime in priimek <span class="req">*</span></label>
+                        <input type="text" id="mobile-fullname" name="fullname" placeholder="npr. Ana Novak" autocomplete="name">
+                        <div class="error-msg">Prosimo, vnesite ime in priimek.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile-company">Podjetje <span class="req">*</span></label>
+                        <input type="text" id="mobile-company" name="company" placeholder="npr. Podjetje d.o.o." autocomplete="organization">
+                        <div class="error-msg">Prosimo, vnesite ime podjetja.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile-email">E-mail naslov <span class="req">*</span></label>
+                        <input type="email" id="mobile-email" name="email" placeholder="npr. ana.novak@podjetje.si" autocomplete="email">
+                        <div class="error-msg">Prosimo, vnesite veljaven e-mail naslov.</div>
+                    </div>
+                    <button type="submit" class="btn-submit" id="mobileSubmitBtn">
+                        Prijavite me na dogodek
+                    </button>
+                    <p class="form-note">
+                        Udeležba je <strong>brezplačna</strong>. Število mest je omejeno.<br>
+                        Za vprašanja: <a href="mailto&#58;monika&#46;kovacic&#64;stroka&#46;si">monika&#46;kovacic&#64;stroka.si</a>
+                    </p>
+                </form>
+            </div>
+            <div class="success-state" id="mobileSuccessState">
+                <div class="success-icon">✓</div>
+                <h3>Prijava uspešna!</h3>
+                <p>Hvala za prijavo. Na vaš e-naslov smo poslali potrditev z vsemi podrobnostmi o dogodku.</p>
+                <p style="margin-top: 12px; font-size: 13px; color: #aaa;">Za vprašanja: <a href="mailto&#58;monika&#46;kovacic&#64;stroka&#46;si" style="color: var(--teal);">monika&#46;kovacic&#64;stroka.si</a></p>
             </div>
         </div>
     </div>
@@ -731,7 +832,7 @@
             </div>
         </div>
 
-        <!-- Right: Form -->
+        <!-- Right: Form (desktop only) -->
         <div class="form-sidebar">
             <div class="form-card">
                 <div class="form-header">
@@ -792,71 +893,109 @@
 
     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
-  <script>
-    var SCRIPT_URL = 'POWER_AUTOMATE_URL_PLACEHOLDER';
+    <script>
+        var SCRIPT_URL = 'POWER_AUTOMATE_URL_PLACEHOLDER';
 
-    function validateEmail(email) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    }
-
-    function setError(inputId, show) {
-        var input = document.getElementById(inputId);
-        if (show) {
-            input.classList.add('error');
-        } else {
-            input.classList.remove('error');
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         }
-    }
 
-    document.getElementById('registrationForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        var fullname = document.getElementById('fullname').value.trim();
-        var company = document.getElementById('company').value.trim();
-        var email = document.getElementById('email').value.trim();
-
-        var hasErrors = false;
-        if (!fullname) { setError('fullname', true); hasErrors = true; } else { setError('fullname', false); }
-        if (!company) { setError('company', true); hasErrors = true; } else { setError('company', false); }
-        if (!email || !validateEmail(email)) { setError('email', true); hasErrors = true; } else { setError('email', false); }
-        if (hasErrors) return;
-
-        var submitBtn = document.getElementById('submitBtn');
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="spinner"></span>Pošiljanje...';
-
-        var payload = JSON.stringify({
-            fullname: fullname,
-            company: company,
-            email: email,
-            timestamp: new Date().toISOString()
-        });
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', SCRIPT_URL, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-
-        xhr.onload = function() {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                document.getElementById('registrationForm').style.display = 'none';
-                document.getElementById('successState').style.display = 'block';
+        function setError(inputId, show) {
+            var input = document.getElementById(inputId);
+            if (show) {
+                input.classList.add('error');
             } else {
+                input.classList.remove('error');
+            }
+        }
+
+        function submitToAPI(fullname, company, email, submitBtn, formEl, successEl) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner"></span>Pošiljanje...';
+
+            var payload = JSON.stringify({
+                fullname: fullname,
+                company: company,
+                email: email,
+                timestamp: new Date().toISOString()
+            });
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', SCRIPT_URL, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    formEl.style.display = 'none';
+                    successEl.style.display = 'block';
+                } else {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Prijavite me na dogodek';
+                    alert('Pri oddaji prijave je prišlo do napake. Poskusite znova.');
+                    console.error('Power Automate error:', xhr.status, xhr.responseText);
+                }
+            };
+
+            xhr.onerror = function() {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = 'Prijavite me na dogodek';
                 alert('Pri oddaji prijave je prišlo do napake. Poskusite znova.');
-                console.error('Power Automate error:', xhr.status, xhr.responseText);
+                console.error('Network error');
+            };
+
+            xhr.send(payload);
+        }
+
+        // Desktop form
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var fullname = document.getElementById('fullname').value.trim();
+            var company = document.getElementById('company').value.trim();
+            var email = document.getElementById('email').value.trim();
+
+            var hasErrors = false;
+            if (!fullname) { setError('fullname', true); hasErrors = true; } else { setError('fullname', false); }
+            if (!company) { setError('company', true); hasErrors = true; } else { setError('company', false); }
+            if (!email || !validateEmail(email)) { setError('email', true); hasErrors = true; } else { setError('email', false); }
+            if (hasErrors) return;
+
+            submitToAPI(
+                fullname, company, email,
+                document.getElementById('submitBtn'),
+                document.getElementById('registrationForm'),
+                document.getElementById('successState')
+            );
+        });
+
+        // Mobile form
+        document.getElementById('mobileRegistrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var fullname = document.getElementById('mobile-fullname').value.trim();
+            var company = document.getElementById('mobile-company').value.trim();
+            var email = document.getElementById('mobile-email').value.trim();
+
+            var hasErrors = false;
+            if (!fullname) { setError('mobile-fullname', true); hasErrors = true; } else { setError('mobile-fullname', false); }
+            if (!company) { setError('mobile-company', true); hasErrors = true; } else { setError('mobile-company', false); }
+            if (!email || !validateEmail(email)) { setError('mobile-email', true); hasErrors = true; } else { setError('mobile-email', false); }
+            if (hasErrors) return;
+
+            submitToAPI(
+                fullname, company, email,
+                document.getElementById('mobileSubmitBtn'),
+                document.getElementById('mobileRegistrationForm'),
+                document.getElementById('mobileSuccessState')
+            );
+        });
+
+        // Smooth scroll for mobile nav button
+        document.querySelector('.mobile-sticky-nav a.btn-nav').addEventListener('click', function(e) {
+            var target = document.getElementById('mobile-form');
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-        };
-
-        xhr.onerror = function() {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = 'Prijavite me na dogodek';
-            alert('Pri oddaji prijave je prišlo do napake. Poskusite znova.');
-            console.error('Network error');
-        };
-
-        xhr.send(payload);
-    });
-</script>
+        });
+    </script>
 </body>
 </html>
