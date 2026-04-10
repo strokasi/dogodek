@@ -196,6 +196,41 @@
             }
         }
 
+        /* ── SPONSOR ── */
+        .sponsor-section {
+            background: #1e2e2e;
+            border-top: none;
+            border-bottom: none;
+            padding: 22px 40px;
+            text-align: center;
+        }
+        .sponsor-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+        .sponsor-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.45);
+            white-space: nowrap;
+        }
+        .sponsor-logo {
+            height: 22px;
+            width: auto;
+            display: block;
+            opacity: 0.75;
+            transition: opacity 0.2s;
+            filter: brightness(0) invert(1);
+        }
+        .sponsor-logo:hover {
+            opacity: 1;
+        }
+
         /* ── LAYOUT ── */
         .page-body {
             max-width: 1200px;
@@ -532,40 +567,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* ── SPONSOR ── */
-        .sponsor-section {
-            background: #f7f7f7;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 40px 40px;
-            text-align: center;
-        }
-        .sponsor-inner {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 28px;
-            flex-wrap: wrap;
-        }
-        .sponsor-label {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--light);
-            white-space: nowrap;
-        }
-        .sponsor-logo {
-            height: 28px;
-            width: auto;
-            display: block;
-            opacity: 0.85;
-            transition: opacity 0.2s;
-        }
-        .sponsor-logo:hover {
-            opacity: 1;
-        }
-
         /* ── FOOTER ── */
         .site-footer {
             background: var(--black);
@@ -661,6 +662,14 @@
                     <div>Brezplačna udeležba</div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Sponsor Section — moved here, right below hero -->
+    <div class="sponsor-section">
+        <div class="sponsor-inner">
+            <p class="sponsor-label">V sodelovanju z</p>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/3840px-Microsoft_logo_%282012%29.svg.png" alt="Microsoft" class="sponsor-logo">
         </div>
     </div>
 
@@ -876,18 +885,10 @@
         </div>
     </div>
 
-    <!-- Sponsor Section -->
-    <div class="sponsor-section">
-        <div class="sponsor-inner">
-            <p class="sponsor-label">V sodelovanju z</p>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/3840px-Microsoft_logo_%282012%29.svg.png" alt="Microsoft" class="sponsor-logo">
-        </div>
-    </div>
-
-    <!-- Footer -->
+<!-- Footer -->
     <div class="site-footer">
         <img src="https://www.stroka.si/Portals/_default/logo_stroka_si_white.png?ver=2025-06-04-113611-483&timestamp=1749029751774" alt="Stroka.si"><br>
-        <p>Skupina stroka.si, Stroka produkt d.o.o. &nbsp;|&nbsp; <a href="mailto&#58;ccc&#64;stroka&#46;si">ccc&#64;stroka.si</a> &nbsp;|&nbsp; +386 (0)2 88 79 780</p>
+        <p>Skupina stroka.si, Stroka produkt d.o.o. &nbsp;|&nbsp; <a href="mailto&#58;ccc&#64;stroka&#46;si">ccc&#64;stroka.si</a> &nbsp;|&nbsp; +386 (0)2 88 79 780 &nbsp;|&nbsp; <a href="https://stroka.si/Varstvo-osebnih-podatkov" target="_blank">Izjava o zasebnosti</a></p>
         <p style="margin-top: 8px; font-size: 11px; color: rgba(255,255,255,0.3);">© 2026 Stroka produkt d.o.o. Vse pravice pridržane.</p>
     </div>
 
